@@ -13,17 +13,24 @@
             display: flex;
             align-items: center;
         }
+
+        .button:not(:last-child){
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script type="text/babel">
         let counter = 0;
+        const Button = ({children,...rest}) => {
+            return <button {...rest} className="button">{children}</button>
+        }
         const root = ReactDOM.createRoot(document.getElementById('root'));
+
         root.render(<div className="counter">
-            <button>Increment</button>
-             &nbsp;
-            <button>Reset</button>
+            <Button tabIndex={2}>Increment</Button>
+            <Button tabIndex={1}>Reset</Button>
              &nbsp;
             {counter}
         </div>);
