@@ -1,9 +1,12 @@
+image: node:14.17.4
+
 pages:
   stage: deploy
+  before_script:
+    - npm install
   script:
-    - mkdir .temporary
-    - cp -r * .temporary
-    - mv .temporary public
+    - npm run build
+    - cp -r dist public
   artifacts:
     paths:
       - public
