@@ -1,0 +1,21 @@
+{
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:react/recommended", "prettier"], // Набор рекомендуемых правил для работы Реакт + ТС
+  "parser": "@typescript-eslint/parser", // Парсер, чтоб линт понимал что он работает именно с ТС файлами, а не JS
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Берет корректную версию реакта из package.json, и не сыпет ошибки для реакта для конкретной версии
+    }
+  },
+  "env": {
+    "node": false, // Перезатираем верхнеуровневое значение окружение для линта
+    "browser": true // Этот код будет работать только браузере
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}
