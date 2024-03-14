@@ -3,13 +3,20 @@ import { MainArticle } from '../MainArticle/MainArticle';
 import { SmallArticle } from '../SmallArticle/SmallArticle';
 import './Articles.css';
 import { NewsAPI } from '../../types';
+import { categoryIds } from '../../utils';
+import { useParams } from 'react-router-dom';
 
-interface Props {
-  articles: NewsAPI;
-  onArticleClick: (id: number) => void;
-}
+export const Articles: FC = () => {
+  const [articles, setArticles] = React.useState<NewsAPI>({ items: [], categories: [], sources: [] });
+  const { categoryId = 'index' } = useParams<{ categoryId?: string }>();
+  React.useEffect(() => {
+    fetch('https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIds[categoryId] || '')
+      .then((response) => response.json())
+      .then((response: NewsAPI) => {
+        setArticles(response);
+      });
+  }, [categoryId]);
 
-export const Articles: FC<Props> = ({ articles, onArticleClick }) => {
   return (
     <section className="articles">
       <div className="container grid">
@@ -20,13 +27,13 @@ export const Articles: FC<Props> = ({ articles, onArticleClick }) => {
 
             return (
               <MainArticle
-                key={item.title}
+                key={item.id}
+                id={item.id}
                 title={item.title}
                 description={item.description}
                 image={item.image}
                 category={category ? category.name : ''}
                 source={source?.name || ''}
-                onClick={() => onArticleClick(item.id)}
               />
             );
           })}
@@ -36,11 +43,11 @@ export const Articles: FC<Props> = ({ articles, onArticleClick }) => {
             const source = articles.sources.find(({ id }) => item.source_id === id);
             return (
               <SmallArticle
-                key={item.title}
+                key={item.id}
+                id={item.id}
                 title={item.title}
                 source={source?.name || ''}
                 date={item.date}
-                onClick={() => onArticleClick(item.id)}
               />
             );
           })}

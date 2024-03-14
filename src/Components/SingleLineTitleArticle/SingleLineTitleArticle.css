@@ -1,4 +1,5 @@
 .single-line-title-article {
+  display: block;
   cursor: pointer;
 }
 
@@ -7,6 +8,7 @@
   width: 100%;
   height: 273px;
   object-fit: cover;
+  overflow: hidden;
 }
 
 .single-line-title-article__category {
