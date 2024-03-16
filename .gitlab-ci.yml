@@ -7,7 +7,7 @@ code_quality:
   image: node:14.17.4
   stage: test
   before_script:
-    - npm ci
+    - npm i
   script:
     - npm run eslint
     - npm run stylelint
@@ -19,7 +19,7 @@ build:
   image: node:14.17.4
   stage: build
   before_script:
-    - npm ci
+    - npm i
   script:
     - npm run build
   artifacts:
