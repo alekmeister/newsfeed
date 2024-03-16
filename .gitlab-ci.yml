@@ -27,7 +27,7 @@ build:
       - dist
   only:
     - merge_requests
-    - master
+    - main
 #deploy:
 #  image: alpine:latest
 #  stage: deploy
