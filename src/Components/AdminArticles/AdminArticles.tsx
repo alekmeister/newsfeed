@@ -32,7 +32,7 @@ export const AdminArticles: FC = () => {
           <Grid item xs={3} key={item}>
             <Card>
               <CardActionArea component={Link} to={`/admin/edit/${item}`}>
-                <CardMedia component="img" height="140" image="https://placehold.co/600x400" alt="green iguana" />
+                <CardMedia component="img" height="140" image="https://placeimg.com/640/480/any" alt="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Lizard
