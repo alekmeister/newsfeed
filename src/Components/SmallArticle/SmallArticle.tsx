@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import './SmallArticle.css';
 import { beautifyDate } from '../../utils';
-import { Link } from 'react-router-dom';
 
 interface Props {
   id: number;
@@ -10,7 +10,7 @@ interface Props {
   date: string;
 }
 
-export const SmallArticle: FC<Props> = ({ title, source, date, id }) => {
+export const SmallArticle: FC<Props> = ({ id, title, source, date }) => {
   return (
     <Link to={`/article/${id}`} className="small-article">
       <article className="small-article__container">

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import './MainArticle.css';
 import { Link } from 'react-router-dom';
+import './MainArticle.css';
+
 interface Props {
   id: number;
   title: string;
@@ -10,7 +11,7 @@ interface Props {
   source: string;
 }
 
-export const MainArticle: FC<Props> = ({ title, image, category, description, source, id }) => {
+export const MainArticle: FC<Props> = ({ id, title, image, category, description, source }) => {
   return (
     <Link to={`/article/${id}`} className="main-article">
       <article className="main-article__container">

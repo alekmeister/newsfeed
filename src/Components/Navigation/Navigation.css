@@ -1,3 +1,7 @@
+.navigation {
+  --link-accent-color: var(--color-accent);
+}
+
 .navigation__logo {
   display: block;
 }
@@ -30,7 +34,7 @@
 
 .navigation__link--active,
 .navigation__link:hover {
-  color: var(--color-accent);
+  color: var(--link-accent-color);
 }
 
 .navigation--footer {

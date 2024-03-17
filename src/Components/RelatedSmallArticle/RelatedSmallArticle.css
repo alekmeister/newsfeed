@@ -1,7 +1,11 @@
 .related-small-article {
-  display: block;
   margin-bottom: 35px;
+  display: block;
   cursor: pointer;
+}
+
+.related-small-article:last-child {
+  margin-bottom: 0;
 }
 
 .related-small-article__container {
@@ -11,13 +15,10 @@
   align-items: center;
 }
 
-.related-small-article:last-child {
-  margin-bottom: 0;
-}
-
 .related-small-article__image {
   grid-column: span 2;
   width: 100%;
+  height: 220px;
   object-fit: cover;
 }
 

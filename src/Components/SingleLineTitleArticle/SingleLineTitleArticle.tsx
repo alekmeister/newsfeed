@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import './SingleLineTitleArticle.css';
 import { Link } from 'react-router-dom';
+import './SingleLineTitleArticle.css';
 
 interface Props {
   id: number;
@@ -11,11 +11,11 @@ interface Props {
   source: string;
 }
 
-export const SingleLineTitleArticle: FC<Props> = ({ image, title, source, text, category, id }) => {
+export const SingleLineTitleArticle: FC<Props> = ({ id, image, title, source, text, category }) => {
   return (
     <Link to={`/article/${id}`} className="single-line-title-article">
       <article className="single-line-title-article__container">
-        <img alt="single_article" className="single-line-title-article__image" src={image} />
+        <img className="single-line-title-article__image" src={image} />
         <span className="article-category single-line-title-article__category">{category}</span>
         <h2 className="single-line-title-article__title">{title}</h2>
         <p className="single-line-title-article__text">{text}</p>

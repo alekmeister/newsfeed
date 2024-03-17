@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { categoryNames } from '../../utils';
+import { NavLink } from 'react-router-dom';
 import './Navigation.css';
+import { categoryNames } from '../../utils';
 import logo from '../../images/logo.svg';
-import { NavLink, useLocation } from 'react-router-dom';
 
 interface Props {
   className?: string;
@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const Navigation: FC<Props> = ({ className = '', placement = 'header' }) => {
-  const location = useLocation();
   return (
     <nav className={`grid navigation navigation--${placement} ${className}`}>
       <NavLink to="/" className="navigation__logo">
@@ -21,14 +20,20 @@ export const Navigation: FC<Props> = ({ className = '', placement = 'header' }) 
           return (
             <li className="navigation__item" key={item}>
               <NavLink
-                isActive={(match) => {
-                  if (match) return true;
-                  return item === 'index' && location.pathname === '/';
-                }}
                 to={`/${item}`}
                 className="navigation__link"
                 activeClassName="navigation__link--active"
-                href="#"
+                isActive={(match, location) => {
+                  if (match) {
+                    return true;
+                  }
+
+                  if (item === 'index' && location.pathname === '/') {
+                    return true;
+                  }
+
+                  return false;
+                }}
               >
                 {categoryNames[item]}
               </NavLink>

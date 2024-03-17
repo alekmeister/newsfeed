@@ -1,19 +1,18 @@
 import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import './ArticleItem.css';
 import { RelatedSmallArticle } from '../RelatedSmallArticle/RelatedSmallArticle';
 import { SingleLineTitleArticle } from '../SingleLineTitleArticle/SingleLineTitleArticle';
 import { Article, ArticleItemAPI, Category, RelatedArticlesAPI, Source } from '../../types';
 import { beautifyDate } from '../../utils';
-import { useParams } from 'react-router-dom';
-import { ArticleItemInfo } from '../ArticleItemInfo/ArticleItemInfo';
+import { ArticleItemInfo } from './ArticleItemInfo/ArticleItemInfo';
 
 export const ArticleItem: FC = () => {
+  const { id }: { id?: string } = useParams();
   const [articleItem, setArticleItem] = React.useState<ArticleItemAPI | null>(null);
   const [relatedArticles, setRelatedArticles] = React.useState<Article[] | null>(null);
-  const [categories, setCategories] = React.useState<Category[]>([]);
   const [sources, setSources] = React.useState<Source[]>([]);
-
-  const { id } = useParams<{ id: string }>();
+  const [categories, setCategories] = React.useState<Category[]>([]);
 
   React.useEffect(() => {
     fetch(`https://frontend.karpovcourses.net/api/v2/news/full/${id}`)
@@ -22,15 +21,15 @@ export const ArticleItem: FC = () => {
 
     Promise.all([
       fetch(`https://frontend.karpovcourses.net/api/v2/news/related/${id}?count=9`).then((response) => response.json()),
-      fetch('https://frontend.karpovcourses.net/api/v2/categories').then((response) => response.json()),
       fetch('https://frontend.karpovcourses.net/api/v2/sources').then((response) => response.json()),
+      fetch('https://frontend.karpovcourses.net/api/v2/categories').then((response) => response.json()),
     ]).then((responses) => {
       const articles: RelatedArticlesAPI = responses[0];
       const sources: Source[] = responses[1];
       const categories: Category[] = responses[2];
       setRelatedArticles(articles.items);
-      setCategories(categories);
       setSources(sources);
+      setCategories(categories);
     });
   }, [id]);
 
