@@ -34,10 +34,13 @@ const partnersPostsCollection = 'partners-posts';
 export const getPartnersArticles = async (): Promise<IPartnerArticle[]> => {
   const db = getFirestore();
   const articles: IPartnerArticle[] = [];
+
   try {
     const querySnapshot = await getDocs(collection(db, partnersPostsCollection));
+
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Omit<IPartnerArticle, 'id'>;
+
       articles.push({
         id: doc.id,
         ...data,
@@ -46,6 +49,7 @@ export const getPartnersArticles = async (): Promise<IPartnerArticle[]> => {
   } catch (error) {
     return Promise.reject(error);
   }
+
   return articles;
 };
 

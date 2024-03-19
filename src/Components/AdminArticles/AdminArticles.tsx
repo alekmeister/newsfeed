@@ -8,7 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import type { IPartnerArticle } from '../../types';
+import { IPartnerArticle } from '../../types';
 import { getPartnersArticles } from '../../api';
 
 export const AdminArticles: FC = () => {
@@ -17,6 +17,7 @@ export const AdminArticles: FC = () => {
   useEffect(() => {
     (async () => {
       const articles = await getPartnersArticles();
+
       setArticles(articles);
     })();
   }, []);
@@ -43,7 +44,7 @@ export const AdminArticles: FC = () => {
           <Grid item xs={3} key={item.id}>
             <Card>
               <CardActionArea component={Link} to={`/admin/edit/${item.id}`}>
-                <CardMedia component="img" height="140" image={item.image} alt="title" />
+                <CardMedia component="img" height="140" image={item.image} alt={item.title} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {item.title}
