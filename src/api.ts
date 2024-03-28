@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, FirebaseApp } from 'firebase/app';
 import {
   collection,
   getDocs,
@@ -14,9 +14,12 @@ import {
 } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { IPartnerArticle } from './types';
+import { getAuth } from 'firebase/auth';
 
-export const initializeAPI = (): void => {
-  initializeApp({
+export let firebaseApp: FirebaseApp;
+
+export const initializeAPI = (): FirebaseApp => {
+  firebaseApp = initializeApp({
     apiKey: 'AIzaSyDgnaLEsPPxWptjIJ3-Lyn7Av5JoIBShw4',
     authDomain: 'vk-neews-feed.firebaseapp.com',
     projectId: 'vk-neews-feed',
@@ -25,8 +28,10 @@ export const initializeAPI = (): void => {
     appId: '1:950453817244:web:5c1941051ec1c30a1c8259',
   });
 
-  getFirestore();
-  getStorage();
+  getAuth(firebaseApp);
+  getFirestore(firebaseApp);
+  getStorage(firebaseApp);
+  return firebaseApp;
 };
 
 const partnersPostsCollection = 'partners-posts';

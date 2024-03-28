@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
-import { MainArticle } from '../MainArticle/MainArticle';
-import { SmallArticle } from '../SmallArticle/SmallArticle';
-import './Articles.css';
-import { NewsAPI } from '../../types';
+import './CategoryPage.css';
+import { CategoryNames, NewsAPI } from '../../types';
 import { useParams } from 'react-router-dom';
-import { categoryIds } from '../../utils';
-import { PartnerArticle } from '../PartnerArticle/PartnerArticle';
+import { categoryIds, categoryTitles } from '../../utils';
+import { SidebarArticleCard } from '../SidebarArticleCard/SidebarArticleCard';
+import { Hero } from '../Hero/Hero';
+import { ArticleCard } from '../ArticleCard/ArticleCard';
 
-export const Articles: FC = () => {
-  const { categoryId = 'index' }: { categoryId?: string } = useParams();
+export const CategoryPage: FC = () => {
+  const { category }: { category: CategoryNames } = useParams();
   const [articles, setArticles] = React.useState<NewsAPI>({
     items: [],
     categories: [],
@@ -16,39 +16,43 @@ export const Articles: FC = () => {
   });
 
   React.useEffect(() => {
-    fetch('https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIds[categoryId] || '')
+    fetch('https://frontend.karpovcourses.net/api/v2/ru/news/' + categoryIds[category] || '')
       .then((response) => response.json())
       .then((response: NewsAPI) => {
         setArticles(response);
       });
-  }, [categoryId]);
+  }, [category]);
 
   return (
-    <section className="articles">
+    <section className="category-page">
+      <Hero title={categoryTitles[category]} image="test" className="category-page__hero" />
       <div className="container grid">
-        <section className="articles__big-column">
-          {articles.items.slice(0, 3).map((item) => {
+        <section className="category-page__content">
+          {articles.items.slice(3).map((item) => {
             const category = articles.categories.find(({ id }) => item.category_id === id);
             const source = articles.sources.find(({ id }) => item.source_id === id);
 
             return (
-              <MainArticle
+              <ArticleCard
+                className="category-page__item"
                 key={item.id}
                 id={item.id}
                 title={item.title}
                 description={item.description}
                 image={item.image}
-                category={category ? category.name : ''}
-                source={source?.name || ''}
+                category={category?.name}
+                source={source?.name}
               />
             );
           })}
         </section>
-        <section className="articles__small-column">
-          {articles.items.slice(3, 12).map((item) => {
+        <section className="category-page__sidebar">
+          {articles.items.slice(0, 3).map((item) => {
             const source = articles.sources.find(({ id }) => item.source_id === id);
             return (
-              <SmallArticle
+              <SidebarArticleCard
+                className="category-page__sidebar-item"
+                image={item.image}
                 key={item.id}
                 id={item.id}
                 title={item.title}
@@ -58,10 +62,6 @@ export const Articles: FC = () => {
             );
           })}
         </section>
-      </div>
-
-      <div className="articles__partner-article">
-        <PartnerArticle />
       </div>
     </section>
   );

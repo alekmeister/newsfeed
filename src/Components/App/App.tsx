@@ -1,12 +1,15 @@
 import React, { FC, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
-import { Articles } from '../Articles/Articles';
-import { ArticleItem } from '../ArticleItem/ArticleItem';
+import { HomePage } from '../HomePage/HomePage';
+import { CategoryPage } from '../CategoryPage/CategoryPage';
+import { ArticlePage } from '../ArticlePage/ArticlePage';
 import { Page } from '../Page/Page';
 import { AdminPage } from '../AdminPage/AdminPage';
 import { AdminArticles } from '../AdminArticles/AdminArticles';
 import { AdminArticleItem } from '../AdminArticleItem/AdminArticleItem';
+import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
+import { LoginContainer } from '../../features/auth/login/LoginContainer';
 
 export const App: FC = () => {
   const { pathname } = useLocation();
@@ -17,34 +20,39 @@ export const App: FC = () => {
 
   return (
     <Switch>
-      <Route path="/admin" exact>
+      <Route path="/login">
+        <Page>
+          <LoginContainer />
+        </Page>
+      </Route>
+      <PrivateRoute path="/admin" exact>
         <AdminPage>
           <AdminArticles />
         </AdminPage>
-      </Route>
-      <Route path="/admin/create">
+      </PrivateRoute>
+      <PrivateRoute path="/admin/create">
         <AdminPage>
           <AdminArticleItem />
         </AdminPage>
-      </Route>
-      <Route path="/admin/edit/:id">
+      </PrivateRoute>
+      <PrivateRoute path="/admin/edit/:id">
         <AdminPage>
           <AdminArticleItem />
         </AdminPage>
-      </Route>
+      </PrivateRoute>
       <Route path="/article/:id">
         <Page>
-          <ArticleItem />
+          <ArticlePage />
         </Page>
       </Route>
-      <Route path="/:categoryId">
+      <Route path="/:category">
         <Page>
-          <Articles />
+          <CategoryPage />
         </Page>
       </Route>
       <Route path="/">
         <Page>
-          <Articles />
+          <HomePage />
         </Page>
       </Route>
     </Switch>

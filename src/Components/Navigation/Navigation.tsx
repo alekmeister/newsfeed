@@ -1,44 +1,40 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
-import { categoryNames } from '../../utils';
-import logo from '../../images/logo.svg';
+import { categoryTitles } from '../../utils';
+import classNames from 'classnames';
 
 interface Props {
   className?: string;
-  placement: 'header' | 'footer';
 }
 
-export const Navigation: FC<Props> = ({ className = '', placement = 'header' }) => {
+interface NavigationItemProps {
+  title?: string;
+  name?: string;
+}
+
+const NavigationItem: FC<NavigationItemProps> = ({ title, name = '' }) => {
   return (
-    <nav className={`grid navigation navigation--${placement} ${className}`}>
-      <NavLink to="/" className="navigation__logo">
-        <img className="navigation__logo-image" src={logo} alt="Логотип" />
+    <li className="navigation__item" key={name}>
+      <NavLink
+        to={`/${name}`}
+        className="navigation__link"
+        activeClassName="navigation__link--active"
+        isActive={(match) => match?.isExact || false}
+      >
+        {title}
       </NavLink>
+    </li>
+  );
+};
+
+export const Navigation: FC<Props> = ({ className = '' }) => {
+  return (
+    <nav className={classNames('navigation', className)}>
       <ul className="navigation__list">
-        {['index', 'fashion', 'technologies', 'sport', 'karpov'].map((item) => {
-          return (
-            <li className="navigation__item" key={item}>
-              <NavLink
-                to={`/${item}`}
-                className="navigation__link"
-                activeClassName="navigation__link--active"
-                isActive={(match, location) => {
-                  if (match) {
-                    return true;
-                  }
-
-                  if (item === 'index' && location.pathname === '/') {
-                    return true;
-                  }
-
-                  return false;
-                }}
-              >
-                {categoryNames[item]}
-              </NavLink>
-            </li>
-          );
+        <NavigationItem title="Новости" />
+        {Object.entries(categoryTitles).map(([name, title]) => {
+          return <NavigationItem key={name} name={name} title={title} />;
         })}
       </ul>
     </nav>
