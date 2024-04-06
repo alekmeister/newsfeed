@@ -1,14 +1,21 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const EslintWebpackPlugin = require('eslint-webpack-plugin');
-const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
+const EslintPlugin = require('eslint-webpack-plugin');
+const StylelintPlugin = require('stylelint-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlInlineScriptWebpackPlugin = require('html-inline-script-webpack-plugin');
+
+const mode = process.env.NODE_ENV || 'production';
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'production',
-  entry: './src/script.tsx',
+  mode,
+  entry: {
+    initColorScheme: './src/initColorScheme.ts',
+    main: './src/script.tsx',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[contenthash].js',
+    filename: '[name].[contenthash].js',
     publicPath: '/',
   },
   module: {
@@ -20,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.svg$/,
@@ -39,15 +46,22 @@ module.exports = {
       '@components': path.resolve('./src/Components'),
     },
   },
+  optimization: {
+    runtimeChunk: mode === 'production' ? false : 'single',
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
-    new StylelintWebpackPlugin({
+    new HtmlInlineScriptWebpackPlugin([/initColorScheme\..+\.js$/]),
+    new MiniCssExtractPlugin({
+      filename: 'bundle.[contenthash].css',
+    }),
+    new StylelintPlugin({
       // Огромный красный экран при ошибках в стилях
       files: '{**/*,*}.css',
     }),
-    new EslintWebpackPlugin({
+    new EslintPlugin({
       // Огромный красный экран при ошибках в файлах
       files: '{**/*,*}.{tsx,js,ts}',
     }),
