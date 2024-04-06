@@ -46,4 +46,4 @@ build:
 #  script:
 #    - rsync -a --delete dist/ $VPS_PATH
 #  only:
-#    - master
+#    - main

@@ -59,7 +59,7 @@ module.exports = {
     hot: true,
     open: true,
     historyApiFallback: {
-      disableDotRule: true,
+      disableDotRule: true, //Позволяет использовать в урле точку (http://localhost:8080/karpov.courses)
     },
   },
 };
