@@ -10,10 +10,10 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
 } from 'firebase/auth';
-import { TAuthContext } from './types';
 import { FirebaseApp } from 'firebase/app';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import { firebaseApp } from '../../api';
+import { firebaseApp } from '@app/api';
+import { TAuthContext } from './types';
 
 type TProps = {
   children: React.ReactNode;

@@ -1,9 +1,9 @@
 {
-  "extends": ["plugin:@typescript-eslint/recommended", "plugin:react/recommended", "prettier"], // Набор рекомендуемых правил для работы Реакт + ТС
-  "parser": "@typescript-eslint/parser", // Парсер, чтоб линт понимал что он работает именно с ТС файлами, а не JS
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:react/recommended", "prettier"],
+  "parser": "@typescript-eslint/parser",
   "settings": {
     "react": {
-      "version": "detect" // Берет корректную версию реакта из package.json, и не сыпет ошибки для реакта для конкретной версии
+      "version": "detect"
     }
   },
   "parserOptions": {
@@ -12,8 +12,8 @@
     }
   },
   "env": {
-    "node": false, // Перезатираем верхнеуровневое значение окружение для линта
-    "browser": true // Этот код будет работать только браузере
+    "node": false,
+    "browser": true
   },
   "rules": {
     "@typescript-eslint/no-explicit-any": "off"

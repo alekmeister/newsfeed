@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap");
+
+:root {
+  --constant-black-alpha64: rgba(0, 0, 0, 0.64);
+  --constant-white-alpha12: rgba(255, 255, 255, 0.12);
+  --constant-white-alpha64: rgba(255, 255, 255, 0.64);
+  --constant-black: #262a2f;
+  --constant-accent: #0083fc;
+  --constant-grey1: #ebebeb;
+  --constant-grey2: #a3a3a3;
+  --constant-white: #fff;
+  --container-width: 940px;
+  --container-padding: 20px;
+  --grid-column-width: 60px;
+  --grid-gap: 20px;
+  --background-zero: var(--constant-white);
+  --background-primary: var(--constant-white);
+  --foreground-primary: var(--constant-black);
+  --color-scheme-switcher-border: var(--constant-grey1);
+  --skeleton-color: var(--constant-grey1);
+  --skeleton-gradient: linear-gradient(to right, transparent 0%, var(--constant-white-alpha64) 100%);
+
+  color-scheme: light;
+}
+
+[scheme="dark"] {
+  --background-zero: #131517;
+  --background-primary: var(--constant-black);
+  --foreground-primary: var(--constant-white);
+  --color-scheme-switcher-border: transparent;
+  --skeleton-color: var(--constant-white-alpha12);
+  --skeleton-gradient: linear-gradient(to right, transparent 0%, var(--constant-white-alpha12) 100%);
+
+  color-scheme: dark;
+}
+
+*:not(svg *) {
+  all: unset;
+  display: revert;
+}
+
+a {
+  cursor: pointer;
+}
+
+.--prevent-scroll {
+  overflow: hidden;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: var(--background-zero);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--foreground-primary);
+  min-width: calc(var(--container-width) + 2 * var(--container-padding));
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  max-width: var(--container-width);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, var(--grid-column-width));
+  gap: var(--grid-gap);
+}
+
+.skeleton-gradient {
+  background-size: 200% 100%;
+  background-attachment: fixed;
+  background-image: var(--skeleton-gradient);
+  animation: skeleton-gradient-animation 1s linear infinite;
+}
+
+@keyframes skeleton-gradient-animation {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: -100% 0;
+  }
+}

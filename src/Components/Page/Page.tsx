@@ -1,14 +1,25 @@
 import React, { FC, Fragment, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './Page.css';
-import { Navigation } from '../Navigation/Navigation';
-import { Logo } from '../Logo/Logo';
-import { ColorSchemeSwitcher } from '@components/ColorSchemeSwitcher/ColorSchemeSwitcher';
-import { EmailModal } from '@components/EmailModal/EmailModal';
+import { Navigation } from '@components/Navigation/Navigation';
+import { Logo } from '@components/Logo/Logo';
+import { EmailModal } from '@features/subscribeNotification/components/EmailModal/EmailModal';
+import { ColorSchemeSwitcher } from '@features/colorScheme/components/ColorSchemeSwitcher/ColorSchemeSwitcher';
+import { Dispatch } from '@app/store';
+import { fetchCategories } from '@features/categories/actions';
+import { fetchSources } from '@features/sources/actions';
 
 const LS_EMAIL_SHOWN_KEY = 'newsfeed:email_modal_shown';
 
 export const Page: FC = ({ children }) => {
+  const dispatch = useDispatch<Dispatch>();
   const [emailModalShown, setEmailModalShown] = useState(!localStorage.getItem(LS_EMAIL_SHOWN_KEY));
+
+  React.useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchSources());
+  }, []);
+
   return (
     <Fragment>
       {emailModalShown && (
