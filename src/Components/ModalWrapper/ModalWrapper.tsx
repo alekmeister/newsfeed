@@ -1,12 +1,14 @@
 import React, { FC, HTMLAttributes, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
+import { CSSTransition } from 'react-transition-group';
 import './ModalWrapper.css';
 
 interface ModalWrapperProps extends HTMLAttributes<HTMLElement> {
   alignX?: 'start' | 'center' | 'end';
   alignY?: 'start' | 'center' | 'end';
   onClose: VoidFunction;
+  shown: boolean;
 }
 
 export const ModalWrapper: FC<ModalWrapperProps> = ({
@@ -15,15 +17,17 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
   alignY = 'center',
   className,
   onClose,
+  shown,
   ...restProps
 }: ModalWrapperProps) => {
   useEffect(() => {
-    document.documentElement.classList.add('--prevent-scroll');
-
+    if (shown) {
+      document.documentElement.classList.add('--prevent-scroll');
+    }
     return () => {
       document.documentElement.classList.remove('--prevent-scroll');
     };
-  }, []);
+  }, [shown]);
 
   useEffect(() => {
     const documentKeydownListener = (e: KeyboardEvent) => {
@@ -38,24 +42,32 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
   }, [onClose]);
 
   return createPortal(
-    <div
-      className={classNames(
-        'modal-wrapper',
-        `modal-wrapper--alignY-${alignY}`,
-        `modal-wrapper--alignX-${alignX}`,
-        className
-      )}
-      onClick={onClose}
-      {...restProps}
+    <CSSTransition
+      in={shown}
+      timeout={300}
+      unmountOnExit={true}
+      mountOnEnter={true}
+      classNames="modal-wrapper-animation"
     >
       <div
-        className="modal-wrapper__children"
-        onKeyDown={(e) => e.stopPropagation()}
-        onClick={(e) => e.stopPropagation()}
+        className={classNames(
+          'modal-wrapper',
+          `modal-wrapper--alignY-${alignY}`,
+          `modal-wrapper--alignX-${alignX}`,
+          className
+        )}
+        onClick={onClose}
+        {...restProps}
       >
-        {children}
+        <div
+          className="modal-wrapper__children"
+          onKeyDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {children}
+        </div>
       </div>
-    </div>,
+    </CSSTransition>,
     document.getElementById('overlay') as HTMLElement
   );
 };

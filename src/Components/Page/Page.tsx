@@ -22,16 +22,13 @@ export const Page: FC = ({ children }) => {
 
   return (
     <Fragment>
-      {emailModalShown && (
-        <EmailModal
-          onClose={() => {
-            localStorage.setItem(LS_EMAIL_SHOWN_KEY, 'true');
-            setEmailModalShown(false);
-          }}
-        >
-          Hello
-        </EmailModal>
-      )}
+      <EmailModal
+        shown={emailModalShown}
+        onClose={() => {
+          localStorage.setItem(LS_EMAIL_SHOWN_KEY, 'true');
+          setEmailModalShown(false);
+        }}
+      />
       <header className="header">
         <div className="container header__container">
           <Logo />
