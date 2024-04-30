@@ -14,7 +14,6 @@ import { getRelatedArticles } from '@features/relatedNews/selectors';
 import { getSources } from '@features/sources/selectors';
 import { fetchArticleItem } from '@features/articleItem/actions';
 import { fetchRelatedArticles } from '@features/relatedNews/actions';
-import { setArticleItem } from '@features/articleItem/slice';
 import { HeroSkeleton } from '@components/Hero/HeroSkeleton';
 import { SkeletonText } from '@components/SkeletonText/SkeletonText';
 import { SidebarArticleCardSkeleton } from '@components/SidebarArticleCard/SidebarArticleCardSkeleton';
@@ -32,10 +31,6 @@ export const ArticlePage: FC = () => {
     Promise.all([dispatch(fetchArticleItem(Number(id))), dispatch(fetchRelatedArticles(Number(id)))]).then(() => {
       setLoading(false);
     });
-
-    return () => {
-      dispatch(setArticleItem(null));
-    };
   }, [id]);
 
   if (loading) {
