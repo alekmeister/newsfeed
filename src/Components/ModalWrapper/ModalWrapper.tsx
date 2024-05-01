@@ -1,8 +1,8 @@
 import React, { FC, HTMLAttributes, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
-import { CSSTransition } from 'react-transition-group';
 import './ModalWrapper.css';
+import { CSSTransition } from 'react-transition-group';
 
 interface ModalWrapperProps extends HTMLAttributes<HTMLElement> {
   alignX?: 'start' | 'center' | 'end';
@@ -24,6 +24,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
     if (shown) {
       document.documentElement.classList.add('--prevent-scroll');
     }
+
     return () => {
       document.documentElement.classList.remove('--prevent-scroll');
     };
@@ -44,9 +45,9 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
   return createPortal(
     <CSSTransition
       in={shown}
-      timeout={300}
-      unmountOnExit={true}
       mountOnEnter={true}
+      unmountOnExit={true}
+      timeout={300}
       classNames="modal-wrapper-animation"
     >
       <div

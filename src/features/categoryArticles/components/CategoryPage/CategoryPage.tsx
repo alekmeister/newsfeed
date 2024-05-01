@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import './CategoryPage.css';
 import { CategoryNames } from '@features/categories/types';
 import { categoryIds, categoryTitles } from '@features/categories/constants';
-import { SidebarArticleCard } from '@components/SidebarArticleCard/SidebarArticleCard';
 import { Hero } from '@components/Hero/Hero';
 import { ArticleCard } from '@components/ArticleCard/ArticleCard';
 import { Dispatch } from '@app/store';
@@ -14,8 +13,10 @@ import { getCategories } from '@features/categories/selectors';
 import { getSources } from '@features/sources/selectors';
 import { HeroSkeleton } from '@components/Hero/HeroSkeleton';
 import { ArticleCardSkeleton } from '@components/ArticleCard/ArticleCardSkeleton';
-import { SidebarArticleCardSkeleton } from '@components/SidebarArticleCard/SidebarArticleCardSkeleton';
 import { repeat } from '@app/utils';
+import { useAdaptive } from '@app/hooks';
+import { SidebarArticleCardSkeleton } from '@components/SidebarArticleCard/SidebarArticleCardSkeleton';
+import { SidebarArticleCard } from '@components/SidebarArticleCard/SidebarArticleCard';
 
 export const CategoryPage: FC = () => {
   const { category }: { category: CategoryNames } = useParams();
@@ -24,6 +25,7 @@ export const CategoryPage: FC = () => {
   const categories = useSelector(getCategories);
   const sources = useSelector(getSources);
   const [loading, setLoading] = useState(true);
+  const { isMobile, isDesktop } = useAdaptive();
 
   React.useEffect(() => {
     setLoading(true);
@@ -42,15 +44,19 @@ export const CategoryPage: FC = () => {
               return <ArticleCardSkeleton key={i} className="category-page__item" />;
             }, 6)}
           </section>
-          <section className="category-page__sidebar">
-            {repeat((i) => {
-              return <SidebarArticleCardSkeleton key={i} className="category-page__sidebar-item" />;
-            }, 3)}
-          </section>
+          {isDesktop && (
+            <section className="category-page__sidebar">
+              {repeat((i) => {
+                return <SidebarArticleCardSkeleton key={i} className="category-page__sidebar-item" />;
+              }, 3)}
+            </section>
+          )}
         </div>
       </section>
     );
   }
+
+  const mainArticles = isMobile ? articles : articles.slice(3);
 
   return (
     <section className="category-page">
@@ -61,7 +67,7 @@ export const CategoryPage: FC = () => {
       />
       <div className="container grid">
         <section className="category-page__content">
-          {articles.slice(3).map((item) => {
+          {mainArticles.map((item) => {
             const category = categories.find(({ id }) => item.category_id === id);
             const source = sources.find(({ id }) => item.source_id === id);
 
@@ -79,23 +85,25 @@ export const CategoryPage: FC = () => {
             );
           })}
         </section>
-        <section className="category-page__sidebar">
-          {articles.slice(0, 3).map((item) => {
-            const source = sources.find(({ id }) => item.source_id === id);
+        {isDesktop && (
+          <section className="category-page__sidebar">
+            {articles.slice(0, 3).map((item) => {
+              const source = sources.find(({ id }) => item.source_id === id);
 
-            return (
-              <SidebarArticleCard
-                className="category-page__sidebar-item"
-                image={item.image}
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                source={source?.name || ''}
-                date={item.date}
-              />
-            );
-          })}
-        </section>
+              return (
+                <SidebarArticleCard
+                  className="category-page__sidebar-item"
+                  image={item.image}
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  source={source?.name || ''}
+                  date={item.date}
+                />
+              );
+            })}
+          </section>
+        )}
       </div>
     </section>
   );
