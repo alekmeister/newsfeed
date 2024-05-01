@@ -24,19 +24,25 @@ export const ArticlePage: FC = () => {
   const articleItem = useSelector(getCachedArticleItem(Number(id)));
   const relatedArticles = useSelector(getRelatedArticles(Number(id)));
   const sources = useSelector(getSources);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!articleItem?.text);
 
-  React.useEffect(() => {
-    setLoading(true);
-    Promise.all([dispatch(fetchArticleItem(Number(id))), dispatch(fetchRelatedArticles(Number(id)))]).then(() => {
-      setLoading(false);
-    });
+  React.useLayoutEffect(() => {
+    if (!articleItem?.text) {
+      setLoading(true);
+      Promise.all([dispatch(fetchArticleItem(Number(id))), dispatch(fetchRelatedArticles(Number(id)))]).then(() => {
+        setLoading(false);
+      });
+    }
   }, [id]);
 
   if (loading) {
     return (
       <section className="article-page">
-        <HeroSkeleton hasText={true} className="article-page__hero" />
+        {articleItem?.title && articleItem.image ? (
+          <Hero title={articleItem.title} image={articleItem.image} className="article-page__hero" />
+        ) : (
+          <HeroSkeleton hasText={true} className="article-page__hero" />
+        )}
         <div className="container article-page__main">
           <div className="article-page__info">
             <SkeletonText />
