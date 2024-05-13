@@ -8,6 +8,7 @@ import { Dispatch } from '@app/store';
 import { fetchCategories } from '@features/categories/actions';
 import { fetchSources } from '@features/sources/actions';
 import { Header } from '@components/Header/Header';
+import { OfflineNotificationWatcher } from '@features/networkStatus/OfflineNotificationWatcher/OfflineNotificationWatcher';
 
 const LS_EMAIL_SHOWN_KEY = 'newsfeed:email_modal_shown';
 
@@ -49,6 +50,7 @@ export const Page: FC = ({ children }) => {
           </div>
         </div>
       </footer>
+      <OfflineNotificationWatcher />
     </Fragment>
   );
 };
