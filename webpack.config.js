@@ -39,7 +39,12 @@ module.exports = {
         },
       },
       {
-        test: /\.(svg|jpg)$/,
+        test: /\.webmanifest$/i,
+        use: 'webpack-webmanifest-loader',
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(svg|jpg|png)$/,
         type: 'asset/resource',
       },
       {
@@ -83,7 +88,7 @@ module.exports = {
       overlay: false,
     },
     hot: true,
-    open: true,
+    open: false,
     historyApiFallback: {
       disableDotRule: true, //Позволяет использовать в урле точку (http://localhost:8080/karpov.courses)
     },
