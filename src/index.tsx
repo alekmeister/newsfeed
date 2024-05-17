@@ -14,8 +14,10 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/sw.js')
     .then(() => {
+      // eslint-disable-next-line no-console
       console.log('sw register success');
     })
+    // eslint-disable-next-line no-console
     .catch(() => console.log('sw error'));
 }
 

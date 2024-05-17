@@ -16,6 +16,7 @@ const cachePrefix = 'newsfeed-cache';
 const cacheName = cachePrefix + '_' + version;
 
 _self.addEventListener('install', (event) => {
+  // eslint-disable-next-line no-console
   console.log('Installing [Service Worker]', event);
 
   event.waitUntil(
@@ -30,6 +31,7 @@ _self.addEventListener('install', (event) => {
           'https://frontend.karpovcourses.net/api/v2/ru/news/6',
         ]);
       })
+      // eslint-disable-next-line no-console
       .catch((e) => console.error('sw install error', e))
   );
 });
@@ -50,6 +52,7 @@ _self.addEventListener('activate', function (event) {
             })
         );
       })
+      // eslint-disable-next-line no-console
       .catch((e) => console.error('sw activation failed', e))
   );
 });

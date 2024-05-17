@@ -64,6 +64,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/app/index.html',
+      favicon: './src/images/favicon.ico',
       excludeChunks: ['sw'], // По умолчанию, все скрипты, описанные в entry:{} добавляются в index.html в тег <script/>. Но мы можем убрать это поведение, добавив необходимый ключ entry в excludeChunks
     }),
     new HtmlInlineScriptWebpackPlugin([/initColorScheme\..+\.js$/]),
