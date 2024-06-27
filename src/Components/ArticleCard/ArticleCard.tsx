@@ -43,9 +43,9 @@ export const ArticleCard: FC<Props> = ({
         className
       )}
     >
-      {hasImage && <Image className="article-card__image" src={image} alt="" />}
+      {hasImage && <Image className="article-card__image" src={image} alt={title} />}
       <div className="article-card__content">
-        <h2 className="article-card__title">{title}</h2>
+        <h3 className="article-card__title">{title}</h3>
         {hasDescription && <span className="article-card__description">{description}</span>}
         <div className="article-card__info">
           {category && category.length > 0 && (
