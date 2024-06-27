@@ -23,7 +23,7 @@ export const EmailModal: FC<EmailModalProps> = ({ onClose, shown }: EmailModalPr
         <button className="email-modal__close" onClick={_onClose}>
           <img
             src={require('../../../../images/cross.svg')}
-            alt="Закрытие модального окна"
+            alt="Закрыть модального окна"
             className="email-modal__close-img"
           />
         </button>
