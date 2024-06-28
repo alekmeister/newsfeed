@@ -96,7 +96,7 @@ export const ArticlePage: FC = () => {
           </div>
 
           {isDesktop && (
-            <div className="article-page__sidebar">
+            <aside className="article-page__sidebar">
               {relatedArticles.slice(3, 9).map((item) => {
                 const source = sources.find(({ id }) => item.source_id === id);
 
@@ -112,7 +112,7 @@ export const ArticlePage: FC = () => {
                   />
                 );
               })}
-            </div>
+            </aside>
           )}
         </div>
       </div>

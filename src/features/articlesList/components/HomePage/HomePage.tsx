@@ -75,11 +75,11 @@ export const HomePage: FC = () => {
                 return <ArticleCardSkeleton key={i} className="home-page__article-card" />;
               }, 4)}
             </section>
-            <section className="home-page__sidebar">
+            <aside className="home-page__sidebar">
               {repeat((i) => {
                 return <SidebarArticleCardSkeleton key={i} className="home-page__sidebar-item" />;
               }, 2)}
-            </section>
+            </aside>
           </div>
         </section>
       </div>

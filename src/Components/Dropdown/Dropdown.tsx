@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import './Dropdown.css';
 import { CSSTransition } from 'react-transition-group';
 import { createFocusTrap } from 'focus-trap';
+
 interface DropdownProps extends HTMLAttributes<HTMLElement> {
   targetRef: RefObject<HTMLElement>;
   shown: boolean;
@@ -33,11 +34,15 @@ export const Droprown: FC<DropdownProps> = ({
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const trap = createFocusTrap(ref.current as HTMLDivElement, { allowOutsideClick: true });
+    const trap = createFocusTrap(ref.current as HTMLDivElement, {
+      allowOutsideClick: true,
+    });
+
     if (shown) {
       trap.activate();
       setCoords(calcCoords(targetRef.current as HTMLElement));
     }
+
     return () => {
       trap.deactivate();
     };

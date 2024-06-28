@@ -7,10 +7,12 @@ import { Burger } from '@components/Icons/Burger';
 import { Cross } from '@components/Icons/Cross';
 import { ColorSchemeSwitcherMobile } from '@features/colorScheme/components/ColorSchemeSwitcherMobile/ColorSchemeSwitcherMobile';
 import { createFocusTrap } from 'focus-trap';
+
 export const MobileHeader: FC = () => {
+  const ref = useRef<HTMLElement | null>(null);
+
   const [isOpenMenu, toggleMenu] = useState(false);
   const [isOpenSubMenu, toggleSubMenu] = useState(false);
-  const ref = useRef<HTMLElement | null>(null);
   const documentKeydownListener = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       toggleMenu(false);
@@ -19,6 +21,7 @@ export const MobileHeader: FC = () => {
 
   useEffect(() => {
     const trap = createFocusTrap(ref.current as HTMLElement);
+
     if (isOpenMenu) {
       trap.activate();
       document.documentElement.classList.add('--prevent-scroll');
@@ -43,10 +46,14 @@ export const MobileHeader: FC = () => {
   }, [isOpenMenu]);
 
   return (
-    <header ref={ref} className="header">
+    <header className="header" ref={ref}>
       <div className="container header__mobile-container">
         <Logo />
-        <button className="header__mobile-button" onClick={() => toggleMenu(!isOpenMenu)}>
+        <button
+          aria-label={isOpenMenu ? 'Скрыть меню' : 'Открыть меню'}
+          className="header__mobile-button"
+          onClick={() => toggleMenu(!isOpenMenu)}
+        >
           {isOpenMenu ? <Cross /> : <Burger />}
         </button>
       </div>

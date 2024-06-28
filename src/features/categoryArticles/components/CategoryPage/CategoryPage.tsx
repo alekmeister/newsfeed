@@ -88,7 +88,7 @@ export const CategoryPage: FC = () => {
           })}
         </section>
         {isDesktop && (
-          <section className="category-page__sidebar">
+          <aside className="category-page__sidebar">
             {articles.slice(0, 3).map((item) => {
               const source = sources.find(({ id }) => item.source_id === id);
 
@@ -104,7 +104,7 @@ export const CategoryPage: FC = () => {
                 />
               );
             })}
-          </section>
+          </aside>
         )}
       </div>
     </section>
