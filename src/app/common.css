@@ -105,3 +105,10 @@ body {
     grid-template-columns: repeat(12, var(--grid-column-width));
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}
