@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import './EmailModal.css';
-import { ModalWrapper } from '@components/ModalWrapper/ModalWrapper';
+import { MODAL_DESCRIPTION_ID, MODAL_LABEL_ID, ModalWrapper } from '@components/ModalWrapper/ModalWrapper';
 import { Button } from '@components/Button/Button';
 
 interface EmailModalProps {
@@ -9,6 +10,7 @@ interface EmailModalProps {
 }
 
 export const EmailModal: FC<EmailModalProps> = ({ onClose, shown }: EmailModalProps) => {
+  const { t } = useTranslation();
   const [sending, setSending] = useState(false);
 
   const _onClose = () => {
@@ -23,17 +25,20 @@ export const EmailModal: FC<EmailModalProps> = ({ onClose, shown }: EmailModalPr
         <button className="email-modal__close" onClick={_onClose}>
           <img
             src={require('../../../../images/cross.svg')}
-            alt="Закрыть модального окна"
+            alt={t('email_modal_button_close')}
             className="email-modal__close-img"
           />
         </button>
-        <h2 className="email-modal__title">
-          Хотите получать последние новости от{' '}
-          <a className="email-modal__link" href="#">
-            Karpov.Courses?
-          </a>
-        </h2>
-        <p className="email-modal__text">Оставьте свой e-mail и будем на связи!</p>
+        <h2
+          className="email-modal__title"
+          id={MODAL_LABEL_ID}
+          dangerouslySetInnerHTML={{
+            __html: t('email_modal_title', { link: `<a class="email-modal__link" href="#">Karpov.Courses?</a>` }),
+          }}
+        />
+        <p className="email-modal__text" id={MODAL_DESCRIPTION_ID}>
+          {t('email_modal_text')}
+        </p>
         <form
           className="email-modal__form"
           onSubmit={(e) => {
@@ -49,9 +54,14 @@ export const EmailModal: FC<EmailModalProps> = ({ onClose, shown }: EmailModalPr
               });
           }}
         >
-          <input type="email" required className="email-modal__input" placeholder="Введите вашу почту" />
+          <input
+            type="email"
+            required
+            className="email-modal__input"
+            placeholder={t('email_modal_input_placeholder')}
+          />
           <Button type="submit" loading={sending}>
-            Подписаться
+            {t('email_modal_button_action')}
           </Button>
         </form>
       </div>

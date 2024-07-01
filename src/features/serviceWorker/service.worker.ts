@@ -1,17 +1,6 @@
-/**
- * Можно не все самому, есть готовая библиотека например https://www.npmjs.com/package/workbox-sw
- * В уроке 1.5 рассказывается про это
- */
-
 const _self = self as unknown as ServiceWorkerGlobalScope;
 
-const date = new Date();
-const firstJan = new Date(date.getFullYear(), 0, 1);
-const version = [
-  'v',
-  date.getFullYear(),
-  Math.floor((date.getTime() - firstJan.getTime()) / (1000 * 60 * 60 * 24 * 7)),
-].join('.');
+const version = 'v0.0.4';
 const cachePrefix = 'newsfeed-cache';
 const cacheName = cachePrefix + '_' + version;
 
@@ -20,40 +9,32 @@ _self.addEventListener('install', (event) => {
   console.log('Installing [Service Worker]', event);
 
   event.waitUntil(
-    caches
-      .open(cacheName)
-      .then(async (cache) => {
-        // console.log('[Service Worker] Precaching App Shell');
-        cache.addAll([
-          '/',
-          'https://frontend.karpovcourses.net/api/v2/ru/news',
-          'https://frontend.karpovcourses.net/api/v2/ru/trends',
-          'https://frontend.karpovcourses.net/api/v2/ru/news/6',
-        ]);
-      })
-      // eslint-disable-next-line no-console
-      .catch((e) => console.error('sw install error', e))
+    caches.open(cacheName).then(async (cache) => {
+      // console.log('[Service Worker] Precaching App Shell');
+      cache.addAll([
+        '/',
+        'https://frontend.karpovcourses.net/api/v2/ru/news',
+        'https://frontend.karpovcourses.net/api/v2/ru/trends',
+        'https://frontend.karpovcourses.net/api/v2/ru/news/6',
+      ]);
+    })
   );
 });
 
 _self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches
-      .keys()
-      .then(function (keys) {
-        // Remove caches whose name is no longer valid
-        return Promise.all(
-          keys
-            .filter(function (key) {
-              return key.startsWith(cachePrefix) && !key.endsWith(version);
-            })
-            .map(function (key) {
-              return caches.delete(key);
-            })
-        );
-      })
-      // eslint-disable-next-line no-console
-      .catch((e) => console.error('sw activation failed', e))
+    caches.keys().then(function (keys) {
+      // Remove caches whose name is no longer valid
+      return Promise.all(
+        keys
+          .filter(function (key) {
+            return key.startsWith(cachePrefix) && !key.endsWith(version);
+          })
+          .map(function (key) {
+            return caches.delete(key);
+          })
+      );
+    })
   );
 });
 
@@ -95,8 +76,8 @@ _self.addEventListener('fetch', (e) => {
           return r;
         }
         return new Response('', {
-          status: 502,
-          statusText: 'No Connection',
+          status: 404,
+          statusText: 'Not Found',
         });
       })()
     );
