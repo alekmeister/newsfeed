@@ -3,14 +3,10 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import '@app/common.css';
-import { initializeAPI } from '@app/api';
 import { App } from '@app/components/App/App';
-import { AuthContextProvider } from '@features/auth/AuthContextProvider';
 import { store } from '@app/store';
 import { NetworkStatusContextProvider } from '@features/networkStatus/NetworkStatusContextProvider';
 import { initI18n } from '@features/locale/utils';
-
-const firebaseApp = initializeAPI();
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
@@ -27,11 +23,9 @@ initI18n(() => {
   ReactDOM.render(
     <Provider store={store}>
       <NetworkStatusContextProvider>
-        <AuthContextProvider firebaseApp={firebaseApp}>
-          <Router>
-            <App />
-          </Router>
-        </AuthContextProvider>
+        <Router>
+          <App />
+        </Router>
       </NetworkStatusContextProvider>
     </Provider>,
     document.getElementById('root')

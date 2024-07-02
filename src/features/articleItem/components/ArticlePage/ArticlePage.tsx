@@ -35,7 +35,6 @@ export const ArticlePage: FC = () => {
       setLoading(true);
       Promise.all([dispatch(fetchArticleItem(Number(id))), dispatch(fetchRelatedArticles(Number(id)))]).then(
         (responses) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           if (responses.every((response) => !response.error)) {
             setLoading(false);

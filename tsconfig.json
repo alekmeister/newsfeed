@@ -5,7 +5,7 @@
     "jsx": "react",
     "lib": ["dom", "es2017", "dom.iterable", "webworker"],
     "baseUrl": "src",
-    "module": "ES2015", // По умолчанию ts-loader преобразует ES модули в CJS модули, а потом вебпак из этого делает бандл. Treeshaking не умеет работать с CJS модуляем, поэтому этой директивой мы запрещаем ts-loader-y менять формат импортов
+    "module": "ES2020", // По умолчанию ts-loader преобразует ES модули в CJS модули, а потом вебпак из этого делает бандл. Treeshaking не умеет работать с CJS модуляем, поэтому этой директивой мы запрещаем ts-loader-y менять формат импортов
     "moduleResolution": "Node", // Если ты видишь импорт вормата import React from 'react' то надо сходить в node_modules и достать там папку react
     "paths": {
       "@components/*": ["components/*"],
