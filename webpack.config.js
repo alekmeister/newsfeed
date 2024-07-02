@@ -65,6 +65,9 @@ module.exports = {
   },
   optimization: {
     runtimeChunk: mode === 'production' ? false : 'single',
+    splitChunks: {
+      chunks: 'all', // Создает чанк из node_modules (этот чанк называют вендорами) и нашего кода из src. При изменении кода в src он не изменяется. Кода мы задеплоим сайт, те пользователи у которых уже был этот чанк просто достанут из кеша и не будут заново все грузить
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
