@@ -5,6 +5,8 @@ const StylelintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlInlineScriptWebpackPlugin = require('html-inline-script-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CSSMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+
 const mode = process.env.NODE_ENV || 'production';
 
 module.exports = {
@@ -68,6 +70,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all', // Создает чанк из node_modules (этот чанк называют вендорами) и нашего кода из src. При изменении кода в src он не изменяется. Кода мы задеплоим сайт, те пользователи у которых уже был этот чанк просто достанут из кеша и не будут заново все грузить
     },
+    minimizer: [`...`, new CSSMinimizerWebpackPlugin()], // '... => костыль, без него почему то перетираются все остальные минимайзеры такие как tenzerPlugin'
   },
   plugins: [
     new BundleAnalyzerPlugin({ openAnalyzer: false }), // Изменить на true если надо посмотреть аналитику
