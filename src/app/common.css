@@ -42,6 +42,7 @@
 }
 
 *:focus-visible {
+  /* Для доступности Если навигироваться через таб то будет виден outline, а если кликать мышкой то нет */
   outline: var(--outer-focus-border);
 }
 
@@ -111,3 +112,19 @@ body {
     transition-duration: 0s !important;
   }
 }
+/* stylelint-disable */
+/*.page-animation-exit {*/
+/*  position: fixed;*/
+/*  left: 0;*/
+/*  top: 0;*/
+/*  width: 100%;*/
+/*  transition: opacity 300ms ease-out, transform 300ms ease-out;*/
+/*  transform: scale(1);*/
+/*  transform-origin: center center;*/
+/*}*/
+
+/*.page-animation-exit-active {*/
+/*  opacity: 0;*/
+/*  transform: scale(1.1);*/
+/*}*/
+/* stylelint-enable */

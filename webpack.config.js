@@ -4,7 +4,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlInlineScriptWebpackPlugin = require('html-inline-script-webpack-plugin');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const mode = process.env.NODE_ENV || 'production';
 
 module.exports = {
@@ -70,6 +70,7 @@ module.exports = {
     },
   },
   plugins: [
+    new BundleAnalyzerPlugin({ openAnalyzer: false }), // Изменить на true если надо посмотреть аналитику
     new HtmlWebpackPlugin({
       template: './src/app/index.html',
       favicon: './src/images/favicon.ico',
