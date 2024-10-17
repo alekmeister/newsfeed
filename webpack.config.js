@@ -68,11 +68,11 @@ const config = {
     },
   },
   optimization: {
-    runtimeChunk: mode === 'production' ? false : 'single',
+    runtimeChunk: mode === 'production' ? false : 'single', // Рантайм код вебпака будет сгенерен только 1 раз
     splitChunks: {
       chunks: 'all', // Создает чанк из node_modules (этот чанк называют вендорами) и нашего кода из src. При изменении кода в src он не изменяется. Кода мы задеплоим сайт, те пользователи у которых уже был этот чанк просто достанут из кеша и не будут заново все грузить
     },
-    minimizer: [`...`, new CSSMinimizerWebpackPlugin()], // '... => костыль, без него почему то перетираются все остальные минимайзеры такие как tenzerPlugin'
+    minimizer: [`...`, new CSSMinimizerWebpackPlugin()], // '... =>, без него перетираются все остальные минимайзеры такие как tenzerPlugin'
   },
   plugins: [
     new BundleAnalyzerPlugin({ openAnalyzer: false }), // Изменить на true если надо посмотреть аналитику

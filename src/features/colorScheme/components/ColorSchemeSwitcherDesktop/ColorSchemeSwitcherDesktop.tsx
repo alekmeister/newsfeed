@@ -5,7 +5,7 @@ import { useColorScheme } from '@features/colorScheme/hooks';
 import { ColorSchemeSwitcherButton } from '@features/colorScheme/components/ColorSchemeSwitcherButton/ColorSchemeSwitcherButton';
 import { ColorSchemeSwitcherMenu } from '@features/colorScheme/components/ColorSchemeSwitcherMenu/ColorSchemeSwitcherMenu';
 
-export const ColorSchemeSwitcherDesktop: FC = () => {
+export const  ColorSchemeSwitcherDesktop: FC = () => {
   const { userScheme, setUserScheme } = useColorScheme();
   const [dropdownShown, setDropdownShown] = useState(false);
   const targetRef = useRef<HTMLButtonElement>(null);

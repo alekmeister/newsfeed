@@ -24,6 +24,10 @@
   --mobile-menu-button: #f2f2f2;
   --outer-focus-border: 4px solid var(--constant-red);
   --inner-focus-border: 0 0 0 4px var(--constant-red) inset;
+
+  /* Используется для покраски нативных элементов */
+
+  /* color-scheme: light; */
 }
 
 [scheme="dark"] {
@@ -34,6 +38,8 @@
   --skeleton-color: var(--constant-white-alpha12);
   --skeleton-gradient: linear-gradient(to right, transparent 0%, var(--constant-white-alpha12) 100%);
   --mobile-menu-button: var(--background-zero);
+
+  /* color-scheme: dark; */
 }
 
 *:not(svg *) {
